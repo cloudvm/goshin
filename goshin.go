@@ -2,8 +2,9 @@ package goshin
 
 import (
 	"fmt"
-	"github.com/bigdatadev/goryman"
 	"time"
+
+	"github.com/bigdatadev/goryman"
 )
 
 type Metric struct {
@@ -42,7 +43,7 @@ func NewGoshin() *Goshin {
 }
 
 func (g *Goshin) Start() {
-	fmt.Print("Gare aux goriiillllleeeees!\n\n\n")
+	//fmt.Print("Gare aux goriiillllleeeees!\n\n\n")
 
 	cputime := NewCPUTime()
 	memoryusage := NewMemoryUsage()
@@ -58,8 +59,8 @@ func (g *Goshin) Start() {
 
 	ticker := time.NewTicker(time.Second * time.Duration(g.Interval))
 
-	for t := range ticker.C {
-		fmt.Println("Tick at ", t)
+	for _ = range ticker.C {
+		//fmt.Println("Tick at ", t)
 
 		// TODO find a better  way
 		// to check if a collector type
