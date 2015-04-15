@@ -34,6 +34,7 @@ type Goshin struct {
 	IgnoreIfaces map[string]bool
 	Thresholds   map[string]*Threshold
 	Checks       map[string]bool
+	TempSensor   string
 }
 
 func NewGoshin() *Goshin {
@@ -49,6 +50,7 @@ func (g *Goshin) Start() {
 	memoryusage := NewMemoryUsage()
 	loadaverage := NewLoadAverage()
 	netstats := NewNetStats(g.Ifaces, g.IgnoreIfaces)
+	temp := NewTemp(g.TempSensor)
 
 	fmt.Printf("Goshin will report each %d seconds\n", g.Interval)
 
@@ -76,6 +78,9 @@ func (g *Goshin) Start() {
 		}
 		if g.Checks["net"] {
 			go netstats.Collect(collectQueue)
+		}
+		if g.Checks["temp"] {
+			go temp.Collect(collectQueue)
 		}
 
 		go g.Report(collectQueue)
